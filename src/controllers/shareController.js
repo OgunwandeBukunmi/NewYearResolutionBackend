@@ -63,8 +63,14 @@ export const getSharePage = async (req, res) => {
     const db = client.db("newyearresolutionguide")
     const collection = await db.collection("imageUrls")
     const doc = await collection.findOne({ uniqueId: id })
-    const { image } = doc
-    console.log(image)
+
+  
+    if (!doc) {
+  console.log("No document found with that id");
+  return;
+} 
+  let {image} = doc
+  console.log(image)
     res.send(`
       <!DOCTYPE html>
       <html>
