@@ -22,10 +22,6 @@ export const createShare = async (req, res) => {
 
     // Generate share ID
     const shareId = generateId()
-    // test
-    console.log(uploadResult.secure_url)
-
-    console.log(process.env.RAILWAY_PUBLIC_DOMAIN)
     const backendUrl = process.env.RAILWAY_PUBLIC_DOMAIN
       ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
       : `http://localhost:${process.env.PORT || 5000}`;
@@ -62,7 +58,7 @@ export const createShare = async (req, res) => {
 // GET /share/:id
 export const getSharePage = async (req, res) => {
   try {
-    const { id } = req.params
+    const { id } = await req.params
     console.log(id)
     const db = client.db("newyearresolutionguide")
     const collection = await db.collection("imageUrls")
@@ -71,11 +67,12 @@ export const getSharePage = async (req, res) => {
       const frontendUrl = process.env.RAILWAY_PUBLIC_DOMAIN
       ? `${process.env.FRONTEND_URL}`
       : `http://localhost:5173`;
-      
-    if (!doc) {
+
+    console.log(doc)
+  if (!doc) {
   console.log("No document found with that id");
-  return;
-} 
+  return res.status(404).send("Guide not found");
+}
   let {image} = doc
   console.log(image)
     res.send(`

@@ -3,6 +3,6 @@ import { getSharePage } from "../controllers/shareController.js";
 
 const router = express.Router();
 
-router.get("/",getSharePage)
+router.get("/:id",getSharePage)
 
 export default router;
