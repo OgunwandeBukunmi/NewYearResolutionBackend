@@ -32,6 +32,10 @@ export const createShare = async (req, res) => {
 
     const shareUrl = `${backendUrl}/share/${shareId}`;
 
+    const frontendUrl = process.env.RAILWAY_PUBLIC_DOMAIN
+      ? `${process.env.FRONTEND_URL}`
+      : `http://localhost:5173`;
+
     // Sending URL to mongodb backend
 
     const db = client.db("newyearresolutionguide")
@@ -55,16 +59,19 @@ export const createShare = async (req, res) => {
   }
 };
 
-// GET /api/share/:id
+// GET /share/:id
 export const getSharePage = async (req, res) => {
   try {
     const { id } = req.params
-
+    console.log(id)
     const db = client.db("newyearresolutionguide")
     const collection = await db.collection("imageUrls")
     const doc = await collection.findOne({ uniqueId: id })
 
-  
+      const frontendUrl = process.env.RAILWAY_PUBLIC_DOMAIN
+      ? `${process.env.FRONTEND_URL}`
+      : `http://localhost:5173`;
+      
     if (!doc) {
   console.log("No document found with that id");
   return;
@@ -84,7 +91,7 @@ export const getSharePage = async (req, res) => {
         <body>
           <img src="${image}" alt="AI Generated Guide"  />
             <script>
-        window.location.href = "${process.env.FRONTEND_URL}";
+        window.location.href = "${frontendUrl}";
       </script>
         </body>
       </html>
