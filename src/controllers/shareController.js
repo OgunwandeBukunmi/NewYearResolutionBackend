@@ -25,7 +25,7 @@ export const createShare = async (req, res) => {
     // test
     console.log(uploadResult.secure_url)
 
-
+    console.log(process.env.RAILWAY_PUBLIC_DOMAIN)
     const backendUrl = process.env.RAILWAY_PUBLIC_DOMAIN
       ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
       : `http://localhost:${process.env.PORT || 5000}`;
